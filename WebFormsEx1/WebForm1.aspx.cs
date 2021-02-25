@@ -12,8 +12,13 @@ namespace WebFormsEx1
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!Page.IsPostBack)
+            {
+                GridView1.DataSource = GetArticlesAsList();
+                GridView1.DataBind();
+            }
         }
+
 
         protected void SubmitArticle(object sender, EventArgs e)
         {
@@ -71,69 +76,93 @@ namespace WebFormsEx1
                 txtName.Text = name;
                 txtPrice.Text = article.Price.ToString();
             }
-        
-    }
 
-    private List<Article> GetArticles()
-    {
-        using (AcademiaNETEntities db = new AcademiaNETEntities())
-        {
-            return db.Article.Where(x => true).ToList();
         }
-    }
-
-    private Article GetArticle(string name)
-    {
-        using (AcademiaNETEntities db = new AcademiaNETEntities())
+        protected void DeleteArticle(object sender, EventArgs e)
         {
-            return db.Article.Where(x => x.Name.Equals(name)).FirstOrDefault();
-        }
+            string name = txtName.Text;
 
-    }
-
-    private void InsertArticle(string name, double price)
-    {
-        using (AcademiaNETEntities db = new AcademiaNETEntities())
-        {
-            Article article = new Article() { Name = name, Price = price };
-            db.Article.Add(article);
-            db.SaveChanges();
-        }
-    }
-
-    private void UpdatePrice(string name, double price)
-    {
-        using (AcademiaNETEntities db = new AcademiaNETEntities())
-        {
-            Article articleUp = db.Article.Where(x => x.Name.Equals(name)).FirstOrDefault();
-            if (articleUp == null)
+            if (name == null)
             {
 
             }
             else
             {
-                articleUp.Price = price;
-                db.SaveChanges();
+                deleteIntro(name);
             }
-        }
-    }
 
-    private void deleteIntro(string name)
-    {
-        using (AcademiaNETEntities db = new AcademiaNETEntities())
+        }
+
+        private List<Article> GetArticlesAsList()
         {
-            Article articleD = db.Article.Where(x => x.Name.Equals(name)).FirstOrDefault();
-            if (articleD == null)
+            using (AcademiaNETEntities db = new AcademiaNETEntities())
             {
-
+                return db.Article.Where(x => true).ToList();
             }
-            else
+        }
+
+        private IQueryable<Article> GetArticlesAsQueryable()
+        {
+            using (AcademiaNETEntities db = new AcademiaNETEntities())
             {
-                db.Article.Remove(articleD);
+                IQueryable<Article> articles = db.Article;
+                return articles;
+            }
+
+        }
+
+        private Article GetArticle(string name)
+        {
+            using (AcademiaNETEntities db = new AcademiaNETEntities())
+            {
+                return db.Article.Where(x => x.Name.Equals(name)).FirstOrDefault();
+            }
+
+        }
+
+        private void InsertArticle(string name, double price)
+        {
+            using (AcademiaNETEntities db = new AcademiaNETEntities())
+            {
+                Article article = new Article() { Name = name, Price = price };
+                db.Article.Add(article);
                 db.SaveChanges();
             }
         }
-    }
 
-}
+        private void UpdatePrice(string name, double price)
+        {
+            using (AcademiaNETEntities db = new AcademiaNETEntities())
+            {
+                Article articleUp = db.Article.Where(x => x.Name.Equals(name)).FirstOrDefault();
+                if (articleUp == null)
+                {
+
+                }
+                else
+                {
+                    articleUp.Price = price;
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        private void deleteIntro(string name)
+        {
+            using (AcademiaNETEntities db = new AcademiaNETEntities())
+            {
+                Article articleD = db.Article.Where(x => x.Name.Equals(name)).FirstOrDefault();
+                if (articleD == null)
+                {
+
+                }
+                else
+                {
+                    db.Article.Remove(articleD);
+                    db.SaveChanges();
+                }
+            }
+        }
+
+    }
 }
