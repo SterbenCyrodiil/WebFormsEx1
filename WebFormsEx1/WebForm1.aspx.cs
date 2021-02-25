@@ -19,8 +19,19 @@ namespace WebFormsEx1
         {
             string name = txtName.Text;
             double price = 0;
-            if(double.TryParse(txtPrice.Text, out price)){
-                InsertArticle(name, price); 
+            if(!double.TryParse(txtPrice.Text, out price)){
+
+            }
+            else
+            {
+                if (name == null)
+                {
+
+                }
+                else
+                {
+                    InsertArticle(name, price);
+                }
             }
            
         }
