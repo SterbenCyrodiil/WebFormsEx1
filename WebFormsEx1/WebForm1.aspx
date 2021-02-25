@@ -23,7 +23,18 @@
         </div>
         <div class="col-sm-4">
             <asp:Button ID="submitBTN" runat="server" Text="SUBMIT" OnClick="SubmitArticle"/>
+            <asp:Button ID="updateBTN" runat="server" Text="UPDATE" OnClick="UpdateArticle"/>
+            <asp:Button ID="searchButton" runat="server" Text="SEARCH" OnClick="SearchArticle"/>
+
         </div>
-    </form>
+    </form><br /> <br />
+    <asp:UpdatePanel>
+        <ContentTemplate>
+            <asp:ListView ID="ProductListing">
+
+            </asp:ListView>
+        </ContentTemplate>
+    </asp:UpdatePanel>
+
 </body>
 </html>
