@@ -37,8 +37,11 @@ namespace WebFormsEx1
                 else
                 {
                     InsertArticle(name, price);
+                    GridView1.DataSource = GetArticlesAsList();
+                    GridView1.DataBind();
                 }
             }
+
         }
 
         protected void UpdateArticle(object sender, EventArgs e)
@@ -58,6 +61,8 @@ namespace WebFormsEx1
                 else
                 {
                     UpdatePrice(name, price);
+                    GridView1.DataSource = GetArticlesAsList();
+                    GridView1.DataBind();
                 }
             }
         }
@@ -73,8 +78,15 @@ namespace WebFormsEx1
             else
             {
                 Article article = GetArticle(name);
-                txtName.Text = name;
-                txtPrice.Text = article.Price.ToString();
+                if (article == null)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Not found')", true);
+                }
+                else
+                {
+                    txtName.Text = name;
+                    txtPrice.Text = article.Price.ToString();
+                }
             }
 
         }
@@ -84,11 +96,13 @@ namespace WebFormsEx1
 
             if (name == null)
             {
-
+                
             }
             else
             {
                 deleteIntro(name);
+                GridView1.DataSource = GetArticlesAsList();
+                GridView1.DataBind();
             }
 
         }
@@ -137,7 +151,7 @@ namespace WebFormsEx1
                 Article articleUp = db.Article.Where(x => x.Name.Equals(name)).FirstOrDefault();
                 if (articleUp == null)
                 {
-
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Could not update, not found')", true);
                 }
                 else
                 {
@@ -154,7 +168,7 @@ namespace WebFormsEx1
                 Article articleD = db.Article.Where(x => x.Name.Equals(name)).FirstOrDefault();
                 if (articleD == null)
                 {
-
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Could not delete, not found')", true);
                 }
                 else
                 {
