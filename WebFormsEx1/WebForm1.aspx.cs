@@ -14,8 +14,7 @@ namespace WebFormsEx1
         {
             if (!Page.IsPostBack)
             {
-                GridView1.DataSource = GetArticlesAsList();
-                GridView1.DataBind();
+                refreshGridview();
             }
         }
 
@@ -26,19 +25,19 @@ namespace WebFormsEx1
             double price = 0;
             if (!double.TryParse(txtPrice.Text, out price))
             {
-
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "Insert a valid number please", true);
             }
             else
             {
                 if (name == null)
                 {
-
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "Insert a name please", true);
                 }
                 else
                 {
                     InsertArticle(name, price);
-                    GridView1.DataSource = GetArticlesAsList();
-                    GridView1.DataBind();
+                    refreshGridview();
+                    clearText(); 
                 }
             }
 
@@ -47,10 +46,10 @@ namespace WebFormsEx1
         protected void UpdateArticle(object sender, EventArgs e)
         {
             string name = txtName.Text;
-            double price = 0;
+            double price;
             if (!double.TryParse(txtPrice.Text, out price))
             {
-
+                
             }
             else
             {
@@ -61,8 +60,8 @@ namespace WebFormsEx1
                 else
                 {
                     UpdatePrice(name, price);
-                    GridView1.DataSource = GetArticlesAsList();
-                    GridView1.DataBind();
+                    refreshGridview();
+                    clearText();
                 }
             }
         }
@@ -101,10 +100,21 @@ namespace WebFormsEx1
             else
             {
                 deleteIntro(name);
-                GridView1.DataSource = GetArticlesAsList();
-                GridView1.DataBind();
+                refreshGridview();
+                clearText(); 
             }
+        }
 
+        protected void DDL1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), 
+            //    "alertMessage", "alert('"+DDL1.SelectedValue+"')", true);
+            Article article = getArticleListItem(DDL1.SelectedValue);
+            if (article != null)
+            {
+                txtName.Text = article.Name;
+                txtPrice.Text = article.Price.ToString(); 
+            }
         }
 
         private List<Article> GetArticlesAsList()
@@ -186,5 +196,30 @@ namespace WebFormsEx1
             }
         }
 
+        private Article getArticleListItem(string name)
+        {
+            return GetArticle(name);
+        }
+
+        private void refreshGridview()
+        {
+            List<Article> articles = GetArticlesAsList();
+            GridView1.DataSource = articles;
+            GridView1.DataBind();
+            List<string> articleNames = new List<string>();
+            foreach (Article article in articles)
+                articleNames.Add(article.Name);
+            DDL1.DataSource = articleNames;
+            DDL1.DataBind();
+
+        }
+
+        private void clearText()
+        {
+            txtName.Text = "";
+            txtPrice.Text = "";
+        }
+
+        
     }
 }

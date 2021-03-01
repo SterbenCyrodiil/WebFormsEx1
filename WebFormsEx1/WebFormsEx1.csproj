@@ -278,6 +278,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Styles\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -42,6 +42,9 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
+        <asp:DropDownList ID="DDL1" runat="server" AutoPostBack="True"
+            OnSelectedIndexChanged="DDL1_SelectedIndexChanged">
+        </asp:DropDownList>
     </form>
 </body>
 </html>
