@@ -107,8 +107,6 @@ namespace WebFormsEx1
 
         protected void DDL1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //ScriptManager.RegisterClientScriptBlock(this, this.GetType(), 
-            //    "alertMessage", "alert('"+DDL1.SelectedValue+"')", true);
             Article article = getArticleListItem(DDL1.SelectedValue);
             if (article != null)
             {
@@ -151,7 +149,7 @@ namespace WebFormsEx1
                 Article check = GetArticle(name);
                 if (check != null)
                 {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Could not update, not found')", true);ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Could not insert, does not exist')", true);
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Article with the same name already exists')", true);ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Could not insert, does not exist')", true);
                 }
                 else
                 {
@@ -169,7 +167,7 @@ namespace WebFormsEx1
                 Article articleUp = db.Article.Where(x => x.Name.Equals(name)).FirstOrDefault();
                 if (articleUp == null)
                 {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Already exists')", true);
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Doesn't exist!')", true);
                 }
                 else
                 {
