@@ -94,14 +94,14 @@ namespace WebFormsEx1
 
             if (name == null)
             {
-
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Write the name')", true);
             }
             else
             {
                 Article article = GetArticle(name);
                 if (article == null)
                 {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Write the name')", true);
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Article not found')", true);
                 }
                 else
                 {
