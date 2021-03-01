@@ -5,8 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 </head>
 <body>
     <header>
@@ -43,22 +42,6 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
-        <%--<asp:UpdatePanel runat="server" ID="Panel">
-                <ContentTemplate>
-                    <asp:ListView ID="ProductListing"
-                        runat="server"
-                        ItemType="WebFormsEx1.Entities"
-                        SelectMethod="GetArticlesAsQueryable">
-                        <ItemTemplate>
-                            <tr>
-                                <td>Item.Name</td>
-                                <td>Item.Price</td>
-                            </tr>
-                        </ItemTemplate>
-                    </asp:ListView>
-                </ContentTemplate>
-            </asp:UpdatePanel>--%>
     </form>
-
 </body>
 </html>

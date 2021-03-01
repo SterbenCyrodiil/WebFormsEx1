@@ -111,7 +111,7 @@ namespace WebFormsEx1
         {
             using (AcademiaNETEntities db = new AcademiaNETEntities())
             {
-                return db.Article.Where(x => true).ToList();
+                return db.Article.ToList();
             }
         }
 
@@ -138,9 +138,17 @@ namespace WebFormsEx1
         {
             using (AcademiaNETEntities db = new AcademiaNETEntities())
             {
-                Article article = new Article() { Name = name, Price = price };
-                db.Article.Add(article);
-                db.SaveChanges();
+                Article check = GetArticle(name);
+                if (check != null)
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Could not update, not found')", true);ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Could not insert, does not exist')", true);
+                }
+                else
+                {
+                    Article article = new Article() { Name = name, Price = price };
+                    db.Article.Add(article);
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -151,7 +159,7 @@ namespace WebFormsEx1
                 Article articleUp = db.Article.Where(x => x.Name.Equals(name)).FirstOrDefault();
                 if (articleUp == null)
                 {
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Could not update, not found')", true);
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('Already exists')", true);
                 }
                 else
                 {
